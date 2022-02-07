@@ -5,7 +5,8 @@ on:
       - "main"
     paths-ignore:
       - '**/README.md'
-      - '**/LICENSE
+      - '**/LICENSE'
+      - '**/.github/workflows/deploy.yml'
 jobs:
   build:
     runs-on: ubuntu-latest
