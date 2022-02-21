@@ -21,18 +21,18 @@ fun <K, V> buildConsumer(bootstrapServers: String, config: ConsumerConfiguration
     props.setProperty("value.deserializer", config.valueDeserializer)
     props.setProperty("max.poll.records", config.maxPoll.toString())
     props.setProperty("security.protocol", config.securityProtocol)
-    config.truststoreLocation?.let {  props.setProperty(" ssl.truststore.location", config.truststoreLocation) }
-    config.truststorePassword?.let {  props.setProperty(" ssl.truststore.password", config.truststorePassword) }
-    config.keystoreLocation?.let {  props.setProperty(" ssl.keystore.location", config.keystoreLocation) }
-    config.keystorePassword?.let {  props.setProperty(" ssl.keystore.password", config.keystorePassword) }
-    config.keyPassword?.let {  props.setProperty(" ssl.key.password", config.keyPassword) }
+    config.truststoreLocation?.let { props.setProperty(" ssl.truststore.location", config.truststoreLocation) }
+    config.truststorePassword?.let { props.setProperty(" ssl.truststore.password", config.truststorePassword) }
+    config.keystoreLocation?.let { props.setProperty(" ssl.keystore.location", config.keystoreLocation) }
+    config.keystorePassword?.let { props.setProperty(" ssl.keystore.password", config.keystorePassword) }
+    config.keyPassword?.let { props.setProperty(" ssl.key.password", config.keyPassword) }
 
     if (config.avroEnabled) {
         props.setProperty("specific.avro.reader", "true")
         props.setProperty("schema.registry.url", config.schemaRegistryUrl)
         props.setProperty("key.subject.name.strategy", config.valueSubjectNamingStrategy)
         props.setProperty("value.subject.name.strategy", config.valueSubjectNamingStrategy)
-        if(config.basicAuthCredentialsSource.isNotEmpty()) {
+        if (config.basicAuthCredentialsSource.isNotEmpty()) {
             props.setProperty("basic.auth.credentials.source", config.basicAuthCredentialsSource)
             props.setProperty("basic.auth.user.info", config.basicAuthCredentials)
         }
