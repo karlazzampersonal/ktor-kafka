@@ -9,14 +9,35 @@ import java.time.Duration
 import java.util.*
 import kotlin.coroutines.CoroutineContext
 
-fun <K, V> buildConsumer(bootstrapServers: String, consumerConfiguration: ConsumerConfiguration): KafkaConsumer<K, V> {
+fun <K, V> buildConsumer(bootstrapServers: String, config: ConsumerConfiguration): KafkaConsumer<K, V> {
     val props = Properties()
     props.setProperty("bootstrap.servers", bootstrapServers)
-    props.setProperty("group.id", consumerConfiguration.groupId)
-    props.setProperty("enable.auto.commit", consumerConfiguration.enableAutoCommit.toString())
-    props.setProperty("auto.commit.interval.ms", consumerConfiguration.autoCommitInterval.toString())
-    props.setProperty("key.deserializer", consumerConfiguration.keyDeserializer)
-    props.setProperty("value.deserializer", consumerConfiguration.valueDeserializer)
+    props.setProperty("allow.auto.create.topics", config.autoCreateTopics.toString())
+    props.setProperty("group.id", config.groupId)
+    props.setProperty("auto.offset.reset", config.autoOffsetReset)
+    props.setProperty("enable.auto.commit", config.enableAutoCommit.toString())
+    props.setProperty("auto.commit.interval.ms", config.autoCommitInterval.toString())
+    props.setProperty("key.deserializer", config.keyDeserializer)
+    props.setProperty("value.deserializer", config.valueDeserializer)
+    props.setProperty("max.poll.records", config.maxPoll.toString())
+    props.setProperty("security.protocol", config.securityProtocol)
+    config.truststoreLocation?.let {  props.setProperty(" ssl.truststore.location", config.truststoreLocation) }
+    config.truststorePassword?.let {  props.setProperty(" ssl.truststore.password", config.truststorePassword) }
+    config.keystoreLocation?.let {  props.setProperty(" ssl.keystore.location", config.keystoreLocation) }
+    config.keystorePassword?.let {  props.setProperty(" ssl.keystore.password", config.keystorePassword) }
+    config.keyPassword?.let {  props.setProperty(" ssl.key.password", config.keyPassword) }
+
+    if (config.avroEnabled) {
+        props.setProperty("specific.avro.reader", "true")
+        props.setProperty("schema.registry.url", config.schemaRegistryUrl)
+        props.setProperty("key.subject.name.strategy", config.valueSubjectNamingStrategy)
+        props.setProperty("value.subject.name.strategy", config.valueSubjectNamingStrategy)
+        if(config.basicAuthCredentialsSource.isNotEmpty()) {
+            props.setProperty("basic.auth.credentials.source", config.basicAuthCredentialsSource)
+            props.setProperty("basic.auth.user.info", config.basicAuthCredentials)
+        }
+    }
+
     return KafkaConsumer(props)
 }
 

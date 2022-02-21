@@ -9,11 +9,26 @@ data class KafkaConfiguration(
 
 data class ConsumerConfiguration(
     var groupId: String = "",
+    var autoCreateTopics: Boolean = true,
+    var autoOffsetReset: String = "latest",
     var enableAutoCommit: Boolean = true,
     var autoCommitInterval: Int = 1000,
+    var maxPoll: Int = 500,
     var keyDeserializer: String = "org.apache.kafka.common.serialization.StringDeserializer",
     var valueDeserializer: String = "org.apache.kafka.common.serialization.StringDeserializer",
     var topics: List<String> = listOf(),
+    var avroEnabled: Boolean = false,
+    var schemaRegistryUrl: String = "localhost:8081",
+    var basicAuthCredentialsSource: String = "",
+    var basicAuthCredentials: String = "",
+    var keySubjectNamingStrategy: String = "io.confluent.kafka.serializers.subject.TopicNameStrategy",
+    var valueSubjectNamingStrategy: String = "io.confluent.kafka.serializers.subject.TopicNameStrategy",
+    var securityProtocol: String = "PLAINTEXT",
+    var truststoreLocation: String? = null,
+    var truststorePassword: String? = null,
+    var keystoreLocation: String? = null,
+    var keystorePassword: String? = null,
+    var keyPassword: String? = null
 )
 
 class Kafka(configuration: Configuration) {

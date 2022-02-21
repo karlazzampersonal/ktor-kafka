@@ -106,9 +106,8 @@ This project is licensed under the Apache 2.0 license
 We welcome any contributions, please submit an issue or PR.
 
 We are still missing:
-- SSL support for kafka  
 - Kafka streams/topology
 - Tests (yikes)
-- Shared props among producers
 - Example with avro de/serialization
+- Support for protobuf
 - Example with protobuf de/serialization
