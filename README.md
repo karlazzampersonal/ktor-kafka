@@ -5,9 +5,9 @@
 A Ktor installable plugin for kafka that allows you to start up consumers in coroutine jobs
 
 ## Example repos
-- TBD
+- https://github.com/karlazzampersonal/ktor-kafka-example
 
-A light repo with multiple producers and consuming messages for both
+A light repo with multiple producers and consumers
 
 ## Usage
 <details><summary>Set up in Kotlin Gradle:</summary>
@@ -106,8 +106,9 @@ This project is licensed under the Apache 2.0 license
 We welcome any contributions, please submit an issue or PR.
 
 We are still missing:
+- SSL support for kafka  
 - Kafka streams/topology
 - Tests (yikes)
+- Shared props among producers
 - Example with avro de/serialization
-- Support for protobuf
 - Example with protobuf de/serialization
